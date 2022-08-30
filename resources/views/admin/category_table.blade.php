@@ -34,9 +34,9 @@
                     <td class="py-4 px-6">
                         {{$category->title}}
                     </td>
-                    <td class="py-4 px-6 flex gap-2">
-                        <a href="#" class="font-medium bg-gray-800 px-4 py-1 hover:bg-gray-900 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="#" class="font-medium bg-gray-800 px-4 py-1 hover:bg-gray-900 text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                    <td class="py-4 px-6 flex gap-3">
+                        <a href="{{route('category.edit',$category->id)}}" class="font-medium bg-gray-800 px-4 py-1 hover:bg-gray-900 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <a href="{{route('category.destroy',$category->id)}}" class="font-medium bg-gray-800 px-4 py-1 hover:bg-gray-900 text-red-600 dark:text-red-500 hover:underline">Delete</a>
                     </td>
                 </tr>
                 @endforeach

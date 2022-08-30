@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\File;
@@ -17,7 +18,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.post_table');
+
+        $posts = Post::with('category')->get();
+        return view('admin.post_table',compact('posts'));
     }
 
     /**
@@ -27,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post_form');
+        $categories = Category::get();
+        return view('admin.post_form',compact('categories'));
     }
 
     /**
@@ -38,26 +42,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-            // $table->string('title', 100);
-    //         $table->string('slug')->unique();
-    //         $table->text('description')->nullable();
-    //         $table->string('image')->nullable();
-    //         $table->bigInteger('total_view')->default(0);
-    //         $table->boolean('is_active')->default(1);
-    //         $table->unsignedBigInteger('user_id');
-    //         $table->foreign('user_id')->references('id')->on('users');
-    //         $table->unsignedBigInteger('category_id');
-    //         $table->foreign('category_id')->references('id')->on('category');
-    //         $table->timestamps();
 
         $post = new Post();
-        $post->title = $request->title;
-        $post->slug = Str::slug($request->title,'-');
+        $post->title = $request->post_title;
+        $post->slug = Str::slug($request->post_title,'-');
+        // $post->slug = Str::of($request->post_title)->slug();
         $post->description = $request->description;
         $post->image = Storage::putFile('public',$request->image);
-        
+        $post->user_id = 1;
+        $post->category_id = $request->category;
+        $post->save();
 
-        return redirect()->route('post.create');
+
+        return back();
     }
 
     /**
@@ -76,6 +73,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $editpost = Post::with('category')->find($post);
+        return view('admin.post_edit_form',compact('editpost'));
     }
 
     /**

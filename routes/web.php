@@ -4,6 +4,8 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TasksController;
+use App\Models\Tasks;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,4 @@ Route::get('/', function () {
 Route::resource('category', CategoryController::class);
 Route::resource('post', PostController::class);
 Route::resource('user', UserController::class);
+Route::resource('task',TasksController::class );

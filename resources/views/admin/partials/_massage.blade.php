@@ -10,4 +10,6 @@
     <div class="mx-auto px-4 py-1 bg-green-200 text-green-700 w-1/2">
         <p class="capitalize">{{ session()->get('success') }}</p>
     </div>
+
+
 @endif
