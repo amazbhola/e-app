@@ -69,7 +69,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\view\view
      */
     public function edit(Post $post)
     {

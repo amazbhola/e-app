@@ -11,7 +11,7 @@ class TasksController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\view\view
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\view\view
      */
     public function create()
     {
@@ -65,16 +65,16 @@ class TasksController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Tasks  $tasks
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\view\view
      */
-    public function edit(Tasks $tasks)
+    public function edit($tasks_and_slug)
     {
-        if (is_numeric($tasks)) {
-            $task = Tasks::find($tasks);
-        }else {
-            $task = Tasks::where('slug',$tasks)->first();
-        }
+        $task = $this->getTaskIdorSlug($tasks_and_slug);
 
+        if (!$task) {
+            session()->flash('error','Sorry, Task not found');
+            return redirect()->route('task.index');
+        }
         return view('admin.task_edit',compact('task'));
     }
 
@@ -99,5 +99,13 @@ class TasksController extends Controller
     public function destroy(Tasks $tasks)
     {
         //
+    }
+    public function getTaskIdorSlug($tasks_and_slug)
+    {
+        if (is_numeric($tasks_and_slug)) {
+            return $task = Tasks::find($tasks_and_slug);
+        }else {
+            return $task = Tasks::where('slug',$tasks_and_slug)->first();
+        }
     }
 }
