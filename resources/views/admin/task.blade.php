@@ -17,14 +17,21 @@
                     @include('admin.partials._task_status', ['task' => $task])
                 </div>
                 @if ($task->image)
-                    <img src="{{ Storage::url($task->image) }}" alt="image" width="50px">
+                    <a href="{{ route('task.show',$task->id) }}">
+                        <img src="{{ Storage::url($task->image) }}" alt="image" width="50px">
+                    </a>
                 @endif
                 <p>{{ $task->description }}</p>
                 <div class="flex gap-3">
                     <a class="px-4 py-1 bg-slate-800 hover:bg-slate-900 text-slate-100"
                         href="{{ route('task.edit', $task->id) }}">Edit</a>
-                    <a class="px-4 py-1 bg-red-800 hover:bg-red-900 text-slate-100"
-                        href="{{ route('task.destroy', $task->id) }}">Delete</a>
+                        <form action="{{ route('task.destroy', $task->id) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button class="px-4 py-1 bg-red-800 hover:bg-red-900 text-slate-100 cursor-pointer" type="submit"
+                            >Delete</button>
+                        </form>
+
                 </div>
             </div>
         @endforeach

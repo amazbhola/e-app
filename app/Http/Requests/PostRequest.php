@@ -30,8 +30,13 @@ class PostRequest extends FormRequest
 
         ];
     }
-    public function ma(Type $var = null)
+    public function messages()
     {
-        # code...
+        return [
+            "post_title|required" =>"title is required",
+            "description|min:10" =>"Description Minimum 10 Character",
+            "image|image" =>"You must upload an image",
+
+        ];
     }
 }

@@ -84,6 +84,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
     }
 
     /**
@@ -91,7 +92,35 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id_or_slug)
     {
+        // check post is exist
+        $posts = $this->getPostIdorSlug($id_or_slug);
+
+
+        if (!$posts) {
+            session()->flash('error', 'Sorry, Post not found');
+            return redirect()->route('post.index');
+        }
+        // check image and delete
+        if ($posts->image) {
+            Storage::delete($posts->image);
+        }
+        // delete post
+        $posts->delete();
+
+        // message session
+
+        session()->flash('success','Post Delete Successfully');
+        return redirect()->route('post.index');
+    }
+
+    public function getPostIdorSlug($id_or_slug)
+    {
+        if (is_numeric($id_or_slug)) {
+            return $posts = Post::find($id_or_slug);
+        }else{
+            return $posts = Post::where('slug',$id_or_slug)->first();
+        }
     }
 }

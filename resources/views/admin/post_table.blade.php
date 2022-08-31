@@ -51,7 +51,11 @@
                     </td>
                     <td class="py-4 px-6 flex gap-3">
                         <a href="{{route('post.edit',$post->id)}}" class="font-medium  bg-gray-800 px-4 py-1 hover:bg-gray-900 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="{{route('post.destroy',$post->id)}}" class="font-medium  bg-gray-800 px-4 py-1 hover:bg-gray-900 text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                        <form action="{{ route('post.destroy',$post->id) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="font-medium cursor-pointer bg-gray-800 px-4 py-1 hover:bg-gray-900 text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
