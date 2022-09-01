@@ -25,7 +25,7 @@
                 <select name="category" id="">
                     <option value="{{ old('category') }}" selected>--Select Category--</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                 </select>
                 <label class="capitalize text-gray-100 text-sm" for="category">Post Category</label>

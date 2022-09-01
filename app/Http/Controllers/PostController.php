@@ -20,7 +20,7 @@ class PostController extends Controller
     {
 
         $posts = Post::with('category')->get();
-        return view('admin.post_table',compact('posts'));
+        return view('admin.post_table', compact('posts'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::get();
-        return view('admin.post_form',compact('categories'));
+        return view('admin.post_form', compact('categories'));
     }
 
     /**
@@ -45,16 +45,22 @@ class PostController extends Controller
 
         $post = new Post();
         $post->title = $request->post_title;
-        $post->slug = Str::slug($request->post_title,'-');
+        $post->slug = Str::slug($request->post_title, '-');
         // $post->slug = Str::of($request->post_title)->slug();
         $post->description = $request->description;
-        $post->image = Storage::putFile('public',$request->image);
+        // upload image
+        if ($request->file('image')) {
+            $file = $request->image;
+            $image_name = Str::of($request->title)->slug() . '-' . '.' . $file->extension();
+            $post->image = $file->storePubliclyAs('public/posts', $image_name);
+        }
+
         $post->user_id = 1;
         $post->category_id = $request->category;
         $post->save();
 
 
-        return back();
+        return redirect()->route('post.index');
     }
 
     /**
@@ -71,10 +77,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\view\view
      */
-    public function edit(Post $post)
+    public function edit($id_or_slug)
     {
-        $editpost = Post::with('category')->find($post);
-        return view('admin.post_edit_form',compact('editpost'));
+        $post = $this->getPostIdOrSlug($id_or_slug);
+        if(!$post){
+            session()->flash('error','Post not found');
+            return redirect()->route('post.index');
+        }
+        return view('admin.post_edit_form',compact('post'));
     }
 
     /**
@@ -84,7 +94,6 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-
     }
 
     /**
@@ -95,7 +104,7 @@ class PostController extends Controller
     public function destroy($id_or_slug)
     {
         // check post is exist
-        $posts = $this->getPostIdorSlug($id_or_slug);
+        $posts = $this->getPostIdOrSlug($id_or_slug);
 
 
         if (!$posts) {
@@ -111,16 +120,16 @@ class PostController extends Controller
 
         // message session
 
-        session()->flash('success','Post Delete Successfully');
+        session()->flash('success', 'Post Delete Successfully');
         return redirect()->route('post.index');
     }
 
-    public function getPostIdorSlug($id_or_slug)
+    public function getPostIdOrSlug($id_or_slug)
     {
         if (is_numeric($id_or_slug)) {
             return $posts = Post::find($id_or_slug);
-        }else{
-            return $posts = Post::where('slug',$id_or_slug)->first();
+        } else {
+            return $posts = Post::where('slug', $id_or_slug)->first();
         }
     }
 }

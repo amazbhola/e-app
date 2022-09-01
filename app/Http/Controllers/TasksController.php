@@ -47,7 +47,7 @@ class TasksController extends Controller
         // image upload
         if ($request->file('image')) {
             $file = $request->image;
-            $name = str::of($request->title)->slug() . '-' .$task->id.'.'.$file->extension();
+            $name = str::slug($request->title,'-') . $task->id.'.'.$file->extension();
             $task->image = $file->storePubliclyAs('public/task', $name);
         }
         // task save
