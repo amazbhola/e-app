@@ -25,10 +25,10 @@
             </div>
             <div class="px-4 py-2 w-full">
                 <select name="status" id="">
-                    <option value="" selected>--Select Status--</option>
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="done">Done</option>
+                    <option value="" >--Select Status--</option>
+                    <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                    <option value="pending"{{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="done"{{ old('status') == 'done' ? 'selected' : '' }}>Done</option>
                 </select>
                 <label class="capitalize text-gray-100 text-sm" for="category">Task Status</label>
             </div>
@@ -36,7 +36,7 @@
 
                 <input
                     class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                    placeholder="Post Image" type="file" name="image" id="image" value="{{ old('image') }}">
+                    placeholder="Post Image" type="file" name="image" id="image" value="{{ isset($_POST['image']) ? old('image') : '' }}">
                 <label class="capitalize text-gray-100 text-sm" for="image">task image</label>
             </div>
             <div class="px-4 py-2 w-full">

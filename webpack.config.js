@@ -10,7 +10,7 @@ const stylesHandler = MiniCssExtractPlugin.loader;
 const config = {
   entry: "./resources/js/app.js",
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "resources/css"),
   },
   devServer: {
     open: true,

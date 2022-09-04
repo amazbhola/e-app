@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
-@php
 
-@endphp
 @section('content')
     <div class="flex justify-between">
         <h1 class="font-semibold text-lg text-gray-800 drop-shadow-md">Task list</h1>

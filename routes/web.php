@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\DoctorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
@@ -25,3 +27,5 @@ Route::resource('category', CategoryController::class);
 Route::resource('post', PostController::class);
 Route::resource('user', UserController::class);
 Route::resource('task',TasksController::class );
+Route::resource('department',DepartmentsController::class );
+Route::resource('doctor',DoctorController::class );

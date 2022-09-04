@@ -51,7 +51,7 @@ class PostController extends Controller
         // upload image
         if ($request->file('image')) {
             $file = $request->image;
-            $image_name = Str::of($request->title)->slug() . '-' . '.' . $file->extension();
+            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
             $post->image = $file->storePubliclyAs('public/posts', $image_name);
         }
 
@@ -68,8 +68,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id_or_slug)
     {
+        return view('admin.post_pdf');
     }
 
     /**
@@ -80,11 +81,13 @@ class PostController extends Controller
     public function edit($id_or_slug)
     {
         $post = $this->getPostIdOrSlug($id_or_slug);
-        if(!$post){
-            session()->flash('error','Post not found');
+        if (!$post) {
+            session()->flash('error', 'Post not found');
             return redirect()->route('post.index');
         }
-        return view('admin.post_edit_form',compact('post'));
+        $data['post'] = $post;
+        $data['categories'] = Category::all();
+        return view('admin.post_edit_form', $data);
     }
 
     /**
@@ -92,8 +95,35 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id_or_slug)
     {
+        $post = $this->getPostIdOrSlug($id_or_slug);
+        if (!$post) {
+            session()->flash('error', 'Post not found');
+            return redirect()->route('post.index');
+        }
+        $post->title = $request->post_title;
+        $post->slug = Str::slug($request->post_title, '-');
+        // $post->slug = Str::of($request->post_title)->slug();
+        $post->description = $request->description;
+        // delete image
+
+        // upload image
+
+        if ($request->image) {
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+            $file = $request->image;
+            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
+            $post->image = $file->storePubliclyAs('public/posts', $image_name);
+        }
+
+        $post->user_id = 1;
+        $post->category_id = $request->category;
+        $post->save();
+        session()->flash('success', 'Post Update Successfully');
+        return redirect()->route('post.index');
     }
 
     /**

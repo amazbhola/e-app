@@ -25,7 +25,7 @@
             </div>
             <div class="px-4 py-2 w-full">
                 <select name="status" id="">
-                    <option value="" selected>--Select Status--</option>
+                    <option value="" >--Select Status--</option>
                     <option value="active" {{ $task->status == 'active' ? 'selected' : '' }}>Active</option>
                     <option value="pending"{{ $task->status == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="done"{{ $task->status == 'done' ? 'selected' : '' }}>Done</option>

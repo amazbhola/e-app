@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="capitalize flex justify-between mb-4">
-    <div class="text-lg font-bold space-x-3 text-gray-800">Posts list</div>
+    <div class="text-lg font-bold space-x-3 text-gray-800">Doctor list</div>
     <div>
-        <a class="px-3 py-2 shadow text-gray-100 bg-gray-700 hover:bg-gray-900 font-semibold" href="{{route('post.create')}}">add post</a>
+        <a class="px-3 py-2 shadow text-gray-100 bg-gray-700 hover:bg-gray-900 font-semibold" href="{{route('doctor.create')}}">Add Doctor</a>
     </div>
 
 </div>
@@ -13,19 +13,19 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">
-                        Post id
+                        Doctor id
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Posts Title
+                        Doctor Name
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Description
+                        Designation
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Category
+                        Email
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Post Image
+                        Phone
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Action
@@ -33,32 +33,35 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $post)
+                @foreach ($doctors as $doctor)
                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                     <td class="py-4 px-6">
-                        {{$post->id}}
+                        {{$doctor->id}}
                     </td>
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{$post->title}}
+                        {{$doctor->name}}
                     </th>
                     <td class="py-4 px-6">
-                        {{$post->description}}
+                        {{$doctor->degree}}
                     </td>
                     <td class="py-4 px-6">
-                        {{$post->category->title}}
+                        {{$doctor->email}}
                     </td>
                     <td class="py-4 px-6">
-                        <img src="{{Storage::url($post->image)}}" alt="" width="50px">
+                        {{$doctor->phone}}
                     </td>
-                    <td class="py-4 px-6 flex items-center gap-3">
-                        <a href="{{route('post.edit',$post->id)}}" class="font-medium  bg-gray-800 px-4 py-1 hover:bg-gray-900 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <form action="{{ route('post.destroy',$post->id) }}" method="POST">
+                    {{-- <td class="py-4 px-6">
+                        <img src="{{Storage::url($doctor->image)}}" alt="" width="50px">
+                    </td> --}}
+                    <td class="py-4 px-6 flex gap-3 items-center">
+                        <a href="{{route('doctor.edit',$doctor->id)}}" class="font-medium  bg-gray-800 px-4 py-1 hover:bg-gray-900 text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <form action="{{ route('doctor.destroy',$doctor->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit" class="font-medium cursor-pointer bg-gray-800 px-4 py-1 hover:bg-gray-900 text-red-600 dark:text-red-500 hover:underline">Delete</button>
                         </form>
                         <div>
-                            <a class="px-4 py-1 shadow text-gray-100 bg-green-700 hover:bg-green-800" href="{{ route('post.show',$post->id) }}">Pdf Download</a>
+                            <a class="px-4 py-1 shadow text-gray-100 bg-green-700 hover:bg-green-800" href="{{ route('post.show',$doctor->id) }}">Pdf Download</a>
                         </div>
                     </td>
                 </tr>
