@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tasks;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Http\Requests\TasksRequest;
+use App\Models\Tasks;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TasksController extends Controller
 {
@@ -18,6 +17,7 @@ class TasksController extends Controller
     public function index()
     {
         $tasks = Tasks::orderBy('id', 'desc')->paginate(10);
+
         return view('admin.task', compact('tasks'));
     }
 
@@ -47,12 +47,13 @@ class TasksController extends Controller
         // image upload
         if ($request->file('image')) {
             $file = $request->image;
-            $name = str::slug($request->title,'-') . $task->id.'.'.$file->extension();
+            $name = str::slug($request->title, '-').$task->id.'.'.$file->extension();
             $task->image = $file->storePubliclyAs('public/task', $name);
         }
         // task save
         $task->save();
         session()->flash('success', 'Task Create Successfully');
+
         return redirect()->route('task.index');
     }
 
@@ -65,7 +66,8 @@ class TasksController extends Controller
     public function show(Tasks $tasks)
     {
         $tasks = Tasks::find($tasks);
-        return view('admin.task_single',compact('tasks'));
+
+        return view('admin.task_single', compact('tasks'));
     }
 
     /**
@@ -78,10 +80,12 @@ class TasksController extends Controller
     {
         $task = $this->getTaskIdorSlug($tasks_and_slug);
 
-        if (!$task) {
+        if (! $task) {
             session()->flash('error', 'Sorry, Task not found');
+
             return redirect()->route('task.index');
         }
+
         return view('admin.task_edit', compact('task'));
     }
 
@@ -96,8 +100,9 @@ class TasksController extends Controller
     {
         // validation data
         $task = $this->getTaskIdorSlug($tasks_and_slug);
-        if (!$task) {
+        if (! $task) {
             session()->flash('error', 'Sorry, Task not found');
+
             return redirect()->route('task.index');
         }
 
@@ -113,12 +118,13 @@ class TasksController extends Controller
             // upload new image
 
             $file = $request->image;
-            $name = str::of($request->title)->slug() . '-' .$task->id.'.'. $file->extension();
+            $name = str::of($request->title)->slug().'-'.$task->id.'.'.$file->extension();
             $task->image = $file->storePubliclyAs('public/task', $name);
         }
         $task->update();
         // Message Return
         session()->flash('success', 'Task Update Successfully');
+
         return redirect()->route('task.index');
     }
 
@@ -132,8 +138,9 @@ class TasksController extends Controller
     {
         // find first
         $task = $this->getTaskIdorSlug($tasks_and_slug);
-        if (!$task) {
+        if (! $task) {
             session()->flash('error', 'Sorry, Task not found');
+
             return redirect()->route('task.index');
         }
         // delete image
@@ -145,8 +152,10 @@ class TasksController extends Controller
         //session message
 
         session()->flash('success', 'Task Delete Successfully');
+
         return redirect()->route('task.index');
     }
+
     public function getTaskIdorSlug($tasks_and_slug)
     {
         if (is_numeric($tasks_and_slug)) {

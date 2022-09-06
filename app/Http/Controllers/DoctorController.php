@@ -16,6 +16,7 @@ class DoctorController extends Controller
     {
         $data = [];
         $data['doctors'] = Doctor::all();
+
         return view('admin.doctor_table', $data);
     }
 
@@ -75,11 +76,13 @@ class DoctorController extends Controller
     {
 
         $doctors = $this->getIdOrSlug($id_or_slug);
-        if (!$doctors) {
+        if (! $doctors) {
             session()->flash('error', 'Doctor not found');
+
             return redirect()->route('doctor.index');
         }
         $data['doctor'] = $doctors;
+
         return view('admin.doctor_edit_form', $data);
     }
 
@@ -93,12 +96,13 @@ class DoctorController extends Controller
     public function update(Request $request, $id_or_slug)
     {
         $doctors = $this->getIdOrSlug($id_or_slug);
-        if (!$doctors) {
+        if (! $doctors) {
             session()->flash('error', 'Doctor not found');
+
             return redirect()->route('doctor.index');
         }
 
-        $doctors->name  =  $request->name;
+        $doctors->name = $request->name;
         $doctors->degree = $request->degree;
         $doctors->specialist = $request->specialist;
         $doctors->phone = $request->phone;
@@ -108,6 +112,7 @@ class DoctorController extends Controller
         $doctors->save();
 
         session()->flash('success', 'Doctor Profile update Successfully');
+
         return redirect()->route('doctor.index');
     }
 
@@ -121,9 +126,11 @@ class DoctorController extends Controller
     {
         $doctor = $this->getIdOrSlug($id_or_slug);
         $doctor->delete();
-        session()->flash('success','Doctors Data Delete Successfully');
+        session()->flash('success', 'Doctors Data Delete Successfully');
+
         return redirect()->route('doctor.index');
     }
+
     public function getIdOrSlug($id_or_slug)
     {
         if (is_numeric($id_or_slug)) {

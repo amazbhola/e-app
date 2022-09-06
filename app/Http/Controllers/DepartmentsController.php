@@ -17,9 +17,10 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        $data=[];
+        $data = [];
         $data['department'] = Departments::first();
-        return view('admin.department',$data);
+
+        return view('admin.department', $data);
     }
 
     /**
@@ -63,7 +64,8 @@ class DepartmentsController extends Controller
     public function edit($id_or_slug)
     {
         $department = $this->getIdOrSlug($id_or_slug);
-        return view('admin.department_form',compact('department'));
+
+        return view('admin.department_form', compact('department'));
     }
 
     /**
@@ -77,8 +79,9 @@ class DepartmentsController extends Controller
     {
 
         $department = $this->getIdOrSlug($id_or_slug);
-        if (!$department) {
-            session()->flash('error','Department not found');
+        if (! $department) {
+            session()->flash('error', 'Department not found');
+
             return redirect()->route('department.index');
         }
         try {
@@ -98,11 +101,12 @@ class DepartmentsController extends Controller
                 }
                 $logo = $request->logo;
                 $logoName = Str::of($request->mobile)->slug().time().'.'.$logo->extension();
-                $department->logo = $logo->storePubliclyAs('public/logo',$logoName);
+                $department->logo = $logo->storePubliclyAs('public/logo', $logoName);
             }
 
             $department->save();
-            session()->flash('success','Department Update Successfully');
+            session()->flash('success', 'Department Update Successfully');
+
             return redirect()->route('department.index');
         } catch (\Exception $e) {
             return  $e->getMessage();
@@ -119,12 +123,13 @@ class DepartmentsController extends Controller
     {
         //
     }
+
     public function getIdOrSlug($id_or_slug)
     {
         if (is_numeric($id_or_slug)) {
             return Departments::find($id_or_slug);
         }else{
-            return Departments::where('name',$id_or_slug)->first();
+            return Departments::where('name', $id_or_slug)->first();
         }
     }
 }

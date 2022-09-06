@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
@@ -16,6 +15,7 @@
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
+        "jubeki/laravel-code-style": "^1.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
@@ -51,6 +51,9 @@
         ],
         "ide-generate":[
             "php artisan ide-helper:generate && php artisan ide-helper:models && php artisan ide-helper:meta"
+        ],
+        "fix-styles":[
+            "php-cs-fixer fix"
         ]
     },
     "extra": {
