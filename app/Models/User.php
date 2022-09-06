@@ -6,11 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -38,4 +43,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'date_of_birth' => 'date',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('profile_photo');
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        try {
+            $this->addMediaConversion('thumbnail')
+                ->width('100')
+                ->height('100');
+        } catch (InvalidManipulation $e) {
+            Log::error('User addMediaConversion :'.$e->getMessage());
+        }
+    }
 }
