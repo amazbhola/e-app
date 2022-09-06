@@ -1,4 +1,7 @@
     {{-- sidebar --}}
+
+
+
     <div class="w-72 min-h-screen transition-all bg-gray-800 shadow-md text-gray-100 z-10 fixed top-0 left-0 flex flex-col" id="sidebar">
         <div class=" relative py-5 text-base font-bold text-center bg-gray-900">E-App
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" id="sidebarClose" class="w-6 h-6 absolute right-3 top-5 md:hidden block cursor-pointer">
@@ -71,6 +74,7 @@
             </div>
         </div>
     </div>
+
     <script>
          document.getElementById('hambarg').addEventListener('click', function () {
             document.getElementById('sidebar').classList.toggle('active')
@@ -79,3 +83,4 @@
             document.getElementById('sidebar').classList.remove('active')
         })
     </script>
+
