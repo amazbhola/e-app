@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -20,6 +19,7 @@ class PostController extends Controller
     {
 
         $posts = Post::with('category')->get();
+
         return view('admin.post_table', compact('posts'));
     }
 
@@ -31,6 +31,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::get();
+
         return view('admin.post_form', compact('categories'));
     }
 
@@ -42,7 +43,6 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-
         $post = new Post();
         $post->title = $request->post_title;
         $post->slug = Str::slug($request->post_title, '-');
@@ -51,14 +51,13 @@ class PostController extends Controller
         // upload image
         if ($request->file('image')) {
             $file = $request->image;
-            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
+            $image_name = Str::of($request->title)->slug().'-'.$post->id.'.'.$file->extension();
             $post->image = $file->storePubliclyAs('public/posts', $image_name);
         }
 
         $post->user_id = 1;
         $post->category_id = $request->category;
         $post->save();
-
 
         return redirect()->route('post.index');
     }
@@ -81,12 +80,14 @@ class PostController extends Controller
     public function edit($id_or_slug)
     {
         $post = $this->getPostIdOrSlug($id_or_slug);
-        if (!$post) {
+        if (! $post) {
             session()->flash('error', 'Post not found');
+
             return redirect()->route('post.index');
         }
         $data['post'] = $post;
         $data['categories'] = Category::all();
+
         return view('admin.post_edit_form', $data);
     }
 
@@ -98,8 +99,9 @@ class PostController extends Controller
     public function update(Request $request, $id_or_slug)
     {
         $post = $this->getPostIdOrSlug($id_or_slug);
-        if (!$post) {
+        if (! $post) {
             session()->flash('error', 'Post not found');
+
             return redirect()->route('post.index');
         }
         $post->title = $request->post_title;
@@ -115,7 +117,7 @@ class PostController extends Controller
                 Storage::delete($post->image);
             }
             $file = $request->image;
-            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
+            $image_name = Str::of($request->title)->slug().'-'.$post->id.'.'.$file->extension();
             $post->image = $file->storePubliclyAs('public/posts', $image_name);
         }
 
@@ -123,6 +125,7 @@ class PostController extends Controller
         $post->category_id = $request->category;
         $post->save();
         session()->flash('success', 'Post Update Successfully');
+
         return redirect()->route('post.index');
     }
 
@@ -136,9 +139,9 @@ class PostController extends Controller
         // check post is exist
         $posts = $this->getPostIdOrSlug($id_or_slug);
 
-
-        if (!$posts) {
+        if (! $posts) {
             session()->flash('error', 'Sorry, Post not found');
+
             return redirect()->route('post.index');
         }
         // check image and delete
@@ -151,6 +154,7 @@ class PostController extends Controller
         // message session
 
         session()->flash('success', 'Post Delete Successfully');
+
         return redirect()->route('post.index');
     }
 

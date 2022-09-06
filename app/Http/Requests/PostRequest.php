@@ -24,18 +24,19 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            "post_title" =>"required",
-            "description" =>"nullable|min:10",
-            "image" =>"nullable|image",
+            'post_title' =>'required',
+            'description' =>'nullable|min:10',
+            'image' =>'nullable|image',
 
         ];
     }
+
     public function messages()
     {
         return [
-            "post_title|required" =>"title is required",
-            "description|min:10" =>"Description Minimum 10 Character",
-            "image|image" =>"You must upload an image",
+            'post_title|required' =>'title is required',
+            'description|min:10' =>'Description Minimum 10 Character',
+            'image|image' =>'You must upload an image',
 
         ];
     }

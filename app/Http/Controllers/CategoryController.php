@@ -86,11 +86,13 @@ class CategoryController extends Controller
     public function edit($id_or_slug)
     {
         $category = $this->getIdOrSlug($id_or_slug);
-        if (!$category) {
-            session()->flash('error','category not found');
+        if (! $category) {
+            session()->flash('error', 'category not found');
+
             return redirect()->route('category.index');
         }
-        return view('admin.category_edit_form',compact('category'));
+
+        return view('admin.category_edit_form', compact('category'));
     }
 
     /**
@@ -101,8 +103,9 @@ class CategoryController extends Controller
     public function update(Request $request, $id_or_slug)
     {
         $category = $this->getIdOrSlug($id_or_slug);
-        if (!$category) {
-            session()->flash('error','Category not found');
+        if (! $category) {
+            session()->flash('error', 'Category not found');
+
             return redirect()->route('category.index');
         }
         $category->title = $request->title;
@@ -114,12 +117,13 @@ class CategoryController extends Controller
         // upload new image
         if ($request->file('image')) {
             $file = $request->image;
-            $image_name = Str::slug($category->title,'-').$category->id.'.'.$file->extension();
-            $category->image = $file->storePubliclyAs('public/category',$image_name);
+            $image_name = Str::slug($category->title, '-').$category->id.'.'.$file->extension();
+            $category->image = $file->storePubliclyAs('public/category', $image_name);
 
         }
         $category->save();
-        session()->flash('success','Post Update Successfully');
+        session()->flash('success', 'Post Update Successfully');
+
         return redirect()->route('category.index');
     }
 
@@ -132,8 +136,9 @@ class CategoryController extends Controller
     {
         // check database data
         $category = $this->getIdOrSlug($id_or_slug);
-        if(!$category){
-            session()->flash('error','Category not found');
+        if(! $category){
+            session()->flash('error', 'Category not found');
+
             return redirect()->route('category.index');
         }
         // check an image
@@ -145,7 +150,8 @@ class CategoryController extends Controller
         $category->delete();
 
         // session messages
-        session()->flash('success','Category Delete Successfully');
+        session()->flash('success', 'Category Delete Successfully');
+
         return redirect()->route('category.index');
 
     }
@@ -155,7 +161,7 @@ class CategoryController extends Controller
         if (is_numeric($id_or_slug)) {
             return $category = Category::find($id_or_slug);
         }else{
-            return $category = Category::where('slug',$id_or_slug);
+            return $category = Category::where('slug', $id_or_slug);
         }
     }
 }

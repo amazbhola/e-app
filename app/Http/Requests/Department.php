@@ -35,14 +35,15 @@ class Department extends FormRequest
             'phone' => 'nullable',
             'fax' => 'nullable',
             'mobile' => 'nullable',
-            'email' => 'required'
+            'email' => 'required',
         ];
     }
+
     public function messages()
     {
        return [
-        'name|required'=>'Department Name is Required',
-        'logo|image' =>'Upload a valid Image'
+           'name|required'=>'Department Name is Required',
+           'logo|image' =>'Upload a valid Image',
        ];
     }
 }

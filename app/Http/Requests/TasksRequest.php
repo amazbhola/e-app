@@ -30,6 +30,7 @@ class TasksRequest extends FormRequest
             'image' => 'nullable|image',
         ];
     }
+
     /**
      * Get the validation messages that apply to the request.
      *
@@ -44,5 +45,4 @@ class TasksRequest extends FormRequest
             'image|image' => 'Upload Must be an Image',
         ];
     }
-
 }
