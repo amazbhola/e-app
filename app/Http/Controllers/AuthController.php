@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -32,9 +33,8 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        //
     }
 
     /**
@@ -47,7 +47,10 @@ class AuthController extends Controller
     {
         //
     }
-
+    public function dashboard()
+    {
+        return redirect()->route('user.index');
+    }
     /**
      * Show the form for editing the specified resource.
      *

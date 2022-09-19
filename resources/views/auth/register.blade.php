@@ -7,7 +7,10 @@
             <h2 class="py-4 font-semibold text-2xl text-center text-gray-100 drop-shadow-xl">Register</h2>
             <hr>
         </div>
-        <form action="{{ route('doctor.store') }}" method="post" class="mt-8">
+        @foreach ($errors->all() as $error )
+            <div class="text-red-600 drop-shadow-md bg-red-200 px-4 space-y-2">{{ $error }}</div>
+        @endforeach
+        <form action="{{ route('auth.store') }}" method="post" class="mt-8">
             @csrf
 
             <div class="px-4 py-2 w-full flex justify-between gap-4">

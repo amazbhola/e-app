@@ -7,34 +7,37 @@
             <h2 class="py-4 font-semibold text-2xl text-center text-gray-100 drop-shadow-xl underline">Login</h2>
             <hr>
         </div>
-        <form action="{{ route('doctor.store') }}" method="post" class="mt-8">
+        <form action="{{ route('user.index') }}" method="get" class="mt-8">
             @csrf
 
             <div class="px-4 py-2 w-full flex flex-col  gap-4">
                 <div class="w-full">
                     <input
                         class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Email" type="text" name="email" id="email" value="">
-                    <label class="capitalize text-gray-100 text-sm" for="email">Email</label>
+                        placeholder="Email, Phone, or Username" type="text" name="identifier" id="identifier"
+                        value="">
+                    <label class="capitalize text-gray-100 text-sm" for="identifier">Email</label>
                 </div>
                 <div class="w-full">
                     <input
                         class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Password" type="password"
-                        name="password" id="password" value="">
+                        placeholder="Password" type="password" name="password" id="password" value="">
                     <label class="capitalize text-gray-100 text-sm " for="phone">password </label>
                 </div>
             </div>
 
 
             <div class="px-4 py-2 w-full">
-                <input class="px-4 py-2 shadow-md bg-gray-800 text-gray-100 hover:bg-gray-900" type="submit" value="Login"
-                    >
+                <input class="px-4 py-2 shadow-md bg-gray-800 text-gray-100 hover:bg-gray-900" type="submit"
+                    value="Login">
 
             </div>
         </form>
-        <div class="px-4 py-2">
-            <a class="text-gray-100 font-semibold" href="{{ route('auth.create') }}">Create an account - For Register ...</a>
+        <div class="px-4 py-2 flex justify-between">
+            <a class="text-gray-100 font-thin px-2 py-0 shadow bg-green-700 hover:bg-gray-900"
+                href="{{ route('auth.create') }}">Create an account - For Register ...</a>
+            <a class="text-gray-100 font-thin px-2 py-0 shadow bg-purple-700 hover:bg-gray-900"
+                href="{{ route('auth.create') }}">Forgot Passowrd ...</a>
         </div>
     </div>
 
