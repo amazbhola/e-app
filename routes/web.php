@@ -35,3 +35,4 @@ Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
 Route::resource('email', EmailController::class);
 Route::resource('googleKeep', GooglekeepController::class);
+Route::get('category/search/{id}', [GoogleKeepController::class, 'categorySearch']);

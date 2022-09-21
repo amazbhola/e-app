@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Googlekeep;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Str;
 
 class GooglekeepController extends Controller
@@ -16,16 +18,25 @@ class GooglekeepController extends Controller
      */
     public function index()
     {
+
         $query = Googlekeep::orderBy('id', 'desc');
-        $search_text = request()->s;
+        $search_text = request()->search;
         if (!empty($search_text)) {
             $query->where('title', 'like', '%' . $search_text . '%');
         }
         $data = [];
-        $data['notes'] = Googlekeep::all();
+        $data['notes'] = $query->get();
+        $data['categories'] = Category::all();
         return view('admin.googlekeep', $data);
     }
 
+    function categorySearch($id)
+    {
+        $data = [];
+        $data['notes'] = GoogleKeep::where('category_id', $id)->get();
+        $data['categories'] = Category::all();
+        return view('admin.googlekeep', $data);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -54,7 +65,8 @@ class GooglekeepController extends Controller
         $notes = [
             'title' => $request->title,
             'note' => $request->note,
-            'status' => 'active',
+            'status' => $request->status,
+            'category_id' => $request->category_id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'image' => $request->file('image') == true ? $image : 'null'
@@ -83,7 +95,8 @@ class GooglekeepController extends Controller
      */
     public function edit(Googlekeep $googlekeep)
     {
-        //
+        $notes = Googlekeep::where('id', $googlekeep);
+        dd($notes);
     }
 
     /**
@@ -104,8 +117,19 @@ class GooglekeepController extends Controller
      * @param  \App\Models\Googlekeep  $googlekeep
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Googlekeep $googlekeep)
+    public function destroy($id_or_slug)
     {
-        //
+        $notes = $this->getGoogleKeepById($id_or_slug);
+        if ($notes->image) {
+            Storage::delete($notes->image);
+        }
+        $notes->delete();
+        return redirect()->route('googleKeep.index');
+    }
+    public function getGoogleKeepById($id_or_slug)
+    {
+        if (is_numeric($id_or_slug)) {
+            return $notes = Googlekeep::query()->find($id_or_slug);
+        }
     }
 }

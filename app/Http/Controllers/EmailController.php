@@ -139,6 +139,7 @@ class EmailController extends Controller
      */
     public function destroy(Email $email)
     {
+
         $email->delete();
         session()->flash('success', 'Email Delete Successfully');
         return redirect()->route('email.index');
