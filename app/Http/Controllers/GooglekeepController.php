@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GoogleKeepRequest;
 use App\Models\Category;
 use App\Models\Googlekeep;
 use Carbon\Carbon;
@@ -22,7 +23,10 @@ class GooglekeepController extends Controller
         $query = Googlekeep::orderBy('id', 'desc');
         $search_text = request()->search;
         if (!empty($search_text)) {
-            $query->where('title', 'like', '%' . $search_text . '%');
+            $query->where('title', 'like', '%' . $search_text . '%')
+                ->orWhere('note', 'like', '%' . $search_text . '%')
+                ->orWhere('status', 'like', '%' . $search_text . '%')
+                ->with('status', 'like', '%' . $search_text . '%');
         }
         $data = [];
         $data['notes'] = $query->get();
@@ -53,7 +57,7 @@ class GooglekeepController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GoogleKeepRequest $request)
     {
 
         // image upload
@@ -93,10 +97,8 @@ class GooglekeepController extends Controller
      * @param  \App\Models\Googlekeep  $googlekeep
      * @return \Illuminate\Http\Response
      */
-    public function edit(Googlekeep $googlekeep)
+    public function edit($id_or_slug)
     {
-        $notes = Googlekeep::where('id', $googlekeep);
-        dd($notes);
     }
 
     /**
@@ -106,10 +108,7 @@ class GooglekeepController extends Controller
      * @param  \App\Models\Googlekeep  $googlekeep
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Googlekeep $googlekeep)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.

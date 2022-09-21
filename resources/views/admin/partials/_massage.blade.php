@@ -10,13 +10,9 @@
     <div class="mx-auto px-4 py-1 bg-green-200 text-green-700 w-1/2">
         <p class="capitalize">{{ session()->get('success') }}</p>
     </div>
-
-
 @endif
 @if (session()->has('error'))
     <div class="mx-auto px-4 py-1 bg-red-200 text-red-700 w-1/2">
         <p class="capitalize">{{ session()->get('error') }}</p>
     </div>
-
-
 @endif

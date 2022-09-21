@@ -9,7 +9,7 @@
 <body class="min-h-screen relative bg-gray-200">
 
     <div class="h-full ">
-        @include('admin.partials._massage')
+
         @yield('content')
     </div>
     @include('admin.partials._footer')
