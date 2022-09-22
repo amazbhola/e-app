@@ -12,4 +12,13 @@ class Category extends Model
         'title', 'user_id',
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Tasks::class);
+    }
+
+    public function googlekeeps()
+    {
+        return $this->hasMany(Googlekeep::class);
+    }
 }

@@ -36,9 +36,11 @@ class GooglekeepController extends Controller
 
     function categorySearch($id)
     {
+
         $data = [];
         $data['notes'] = GoogleKeep::where('category_id', $id)->get();
-        $data['categories'] = Category::all();
+        // dd($data);
+        $data['categories'] = Category::get();
         return view('admin.googlekeep', $data);
     }
     /**
