@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DoctorController;
@@ -28,3 +29,4 @@ Route::resource('user', UserController::class);
 Route::resource('task', TasksController::class);
 Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
+Route::resource('address', AddressController::class);

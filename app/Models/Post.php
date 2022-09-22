@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Post extends Model implements HasMedia
 {
-    use HasFactory,InteractsWithMedia;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'title', 'slug', 'description', 'is_active', 'image',
@@ -20,7 +20,7 @@ class Post extends Model implements HasMedia
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     public function getRouteKeyName()
@@ -31,17 +31,16 @@ class Post extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('post-collection');
-
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
         try {
-           $this->addMediaConversion('thumbnail')
-           ->width('100')
-           ->height('100');
+            $this->addMediaConversion('thumbnail')
+                ->width('100')
+                ->height('100');
         } catch (InvalidManipulation $e) {
-            Log::error('Post addMediaConversion :'.$e->getMessage());
+            Log::error('Post addMediaConversion :' . $e->getMessage());
         }
     }
 }
