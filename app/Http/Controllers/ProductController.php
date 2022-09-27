@@ -18,6 +18,7 @@ class ProductController extends Controller
         $data = [];
         $data['collection'] = Category::get();
         $data['products'] = Product::get();
+
         return view('product.product', $data);
     }
 

@@ -18,6 +18,9 @@
                         <img src="{{ Storage::url($product->image) }}" alt="image" width="50px">
                     </a>
                 @endif
+                @if (!is_null($product->description))
+                    <p>{{ $product->description }}</p>
+                @endif
                 <p>{{ $product->category->title }}</p>
 
                 {{-- <span>{{ $product->category->title }}</span> --}}
