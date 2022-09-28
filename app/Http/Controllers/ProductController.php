@@ -25,6 +25,7 @@ class ProductController extends Controller
     {
         $data = [];
         $data['category'] = Category::find($id);
+        $data['collection'] = Category::get();
         return view('product.category', $data);
     }
     /**

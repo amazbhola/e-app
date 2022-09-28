@@ -22,12 +22,18 @@
                     <p>{{ $product->description }}</p>
                 @endif
                 @if (!is_null($product->category))
-                    <p>{{ $product->category->title }}</p>
+                    <a href="{{ route('product.category', $product->category_id) }}">
+                        <span class="bg-green-700 rounded-sm px-[3px] text-gray-100">{{ $product->category->title }}</span>
+                    </a>
+                @else
+                    <span class="bg-yellow-800 rounded-sm px-[3px] text-gray-100">N/A</span>
                 @endif
                 @if (!is_null($product->tags))
-                    @foreach ($product->tags as $tag)
-                        <p>{{ $tag->name }}</p>
-                    @endforeach
+                    <div class="flex flex-row gap-2">
+                        @foreach ($product->tags as $tag)
+                            <a href=""><span class="bg-gray-700 text-gray-100 px-2">{{ $tag->name }}</span></a>
+                        @endforeach
+                    </div>
                 @endif
 
                 {{-- <span>{{ $product->category->title }}</span> --}}

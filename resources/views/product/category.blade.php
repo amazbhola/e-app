@@ -3,11 +3,11 @@
 @section('content')
     @include('partials._nav')
     <div class="flex justify-between">
-        <h1 class="font-semibold text-lg text-gray-800 drop-shadow-md">Product list</h1>
+        <h1 class="font-bold text-gray-800 drop-shadow-md text-xl">Cateogry :{{ $category->title }} </h1>
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        @foreach ($products as $product)
+        @foreach ($category->products as $product)
             <div class="bg-gray-200 shadow-md p-6 space-y-2 m-4">
                 <div class="flex justify-between">
                     <h3 class="text-xl font-semibold capitalize">{{ $product->name }}</h3>
@@ -22,14 +22,19 @@
                     <p>{{ $product->description }}</p>
                 @endif
                 @if (!is_null($product->category))
-                    <p>{{ $product->category->title }}</p>
+                    <a href="{{ route('product.category', $product->category_id) }}">
+                        <span class="bg-green-700 rounded-sm px-[3px] text-gray-100">{{ $product->category->title }}</span>
+                    </a>
+                @else
+                    <span class="bg-yellow-800 rounded-sm px-[3px] text-gray-100">N/A</span>
                 @endif
                 @if (!is_null($product->tags))
-                    @foreach ($product->tags as $tag)
-                        <p>{{ $tag->name }}</p>
-                    @endforeach
+                    <div class="flex flex-row gap-2">
+                        @foreach ($product->tags as $tag)
+                            <a href=""><span class="bg-gray-700 text-gray-100 px-2">{{ $tag->name }}</span></a>
+                        @endforeach
+                    </div>
                 @endif
-
 
                 {{-- <span>{{ $product->category->title }}</span> --}}
                 <div class="flex gap-3">

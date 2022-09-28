@@ -32,3 +32,4 @@ Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
 Route::resource('address', AddressController::class);
 Route::resource('product', ProductController::class);
+Route::get('product/category/{id}', [ProductController::class, 'category'])->name('product.category');
