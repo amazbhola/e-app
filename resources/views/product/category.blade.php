@@ -30,6 +30,7 @@
                     @endforeach
                 @endif
 
+
                 {{-- <span>{{ $product->category->title }}</span> --}}
                 <div class="flex gap-3">
                     <a class="px-4 py-1 bg-slate-800 hover:bg-slate-900 text-slate-100"
@@ -44,6 +45,5 @@
                 </div>
             </div>
         @endforeach
-
     </div>
 @endsection

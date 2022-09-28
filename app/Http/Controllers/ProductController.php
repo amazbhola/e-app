@@ -21,7 +21,12 @@ class ProductController extends Controller
 
         return view('product.product', $data);
     }
-
+    public function category($id)
+    {
+        $data = [];
+        $data['category'] = Category::find($id);
+        return view('product.category', $data);
+    }
     /**
      * Show the form for creating a new resource.
      *
