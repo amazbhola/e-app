@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +30,5 @@ Route::resource('user', UserController::class);
 Route::resource('task', TasksController::class);
 Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
+Route::resource('address', AddressController::class);
+Route::resource('product', ProductController::class);
