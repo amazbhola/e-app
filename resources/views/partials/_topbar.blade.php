@@ -3,8 +3,11 @@
         <h2>logo</h2>
     </div>
     <div>
-        <a class="bg-gray-800 text-gray-100 px-3 py-2 hover:bg-gray-900" href="">Sign Up</a>
-        <a class="bg-gray-800 text-gray-100 px-3 py-2 hover:bg-gray-900" href="{{ route('user.index') }}">Dashboard</a>
+        @guest
+            <a class="bg-gray-800 text-gray-100 px-3 py-2 hover:bg-gray-900" href="{{ route('login') }}">Login</a>
+            <a class="bg-gray-800 text-gray-100 px-3 py-2 hover:bg-gray-900" href="{{ route('register') }}">Sign Up</a>
+        @endguest
+
     </div>
 </div>
 <hr>

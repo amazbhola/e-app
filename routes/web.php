@@ -32,3 +32,7 @@ Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
 Route::resource('address', AddressController::class);
 Route::resource('product', ProductController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
