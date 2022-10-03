@@ -56,7 +56,11 @@ class User extends Authenticatable implements HasMedia
                 ->width('100')
                 ->height('100');
         } catch (InvalidManipulation $e) {
-            Log::error('User addMediaConversion :'.$e->getMessage());
+            Log::error('User addMediaConversion :' . $e->getMessage());
         }
+    }
+    public function address()
+    {
+        return $this->hasOne(Address::class);
     }
 }
