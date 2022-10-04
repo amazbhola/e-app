@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
 Route::resource('category', CategoryController::class);
 Route::resource('post', PostController::class);
 Route::resource('user', UserController::class);
@@ -32,7 +34,5 @@ Route::resource('department', DepartmentsController::class);
 Route::resource('doctor', DoctorController::class);
 Route::resource('address', AddressController::class);
 Route::resource('product', ProductController::class);
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

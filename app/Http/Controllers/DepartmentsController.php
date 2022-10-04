@@ -10,6 +10,10 @@ use Illuminate\Support\Str;
 
 class DepartmentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +34,6 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -79,7 +82,7 @@ class DepartmentsController extends Controller
     {
 
         $department = $this->getIdOrSlug($id_or_slug);
-        if (! $department) {
+        if (!$department) {
             session()->flash('error', 'Department not found');
 
             return redirect()->route('department.index');
@@ -100,7 +103,7 @@ class DepartmentsController extends Controller
                     Storage::delete($department->logo);
                 }
                 $logo = $request->logo;
-                $logoName = Str::of($request->mobile)->slug().time().'.'.$logo->extension();
+                $logoName = Str::of($request->mobile)->slug() . time() . '.' . $logo->extension();
                 $department->logo = $logo->storePubliclyAs('public/logo', $logoName);
             }
 
@@ -128,7 +131,7 @@ class DepartmentsController extends Controller
     {
         if (is_numeric($id_or_slug)) {
             return Departments::find($id_or_slug);
-        }else{
+        } else {
             return Departments::where('name', $id_or_slug)->first();
         }
     }
