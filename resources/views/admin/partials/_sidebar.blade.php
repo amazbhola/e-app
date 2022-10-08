@@ -16,7 +16,7 @@
         <div class="flex flex-col flex-grow justify-between">
             <div class="py-5">
                 <a class="border-l-4 border-blue-600 flex gap-3 items-center my-1 px-4 py-3 hover:bg-gray-900"
-                    href="{{ route('user.index') }}">
+                    href="{{ route('dashboard') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path
                             d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
@@ -84,26 +84,35 @@
 
                     Settings</a>
 
-                <a class="border-l-4 md:hidden border-blue-600 flex gap-3 items-center my-1 px-4 py-3 hover:bg-gray-900"
-                    href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd"
-                            d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-
-
-                    Logout</a>
 
             </div>
 
             <div class="py-1 md:hidden block">
                 <div class="py-2">
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="border-l-4 md:hidden border-blue-600 flex gap-3 items-center my-1 px-4 py-3 hover:bg-gray-900 w-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+
+
+                            Logout
+                        </button>
+                    </form>
+
                     <hr>
                 </div>
                 <div class="px-4">
+
                     <img class="rounded-full shadow w-12 h-12 border-2 hover:border-4 border-blue-700"
                         src="https://i.pravatar.cc/150?img=2" alt="Avater">
+
 
                 </div>
             </div>

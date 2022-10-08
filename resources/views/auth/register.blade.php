@@ -1,71 +1,64 @@
-@include('partials._meta')
-@include('partials._styles')
+<x-guest-layout>
+    <x-auth-card>
+        <x-slot name="logo">
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </x-slot>
 
-<div class="h-screen flex items-center justify-center">
-    <div class="w-full md:w-2/6 mx-auto bg-gray-700 pb-6 shadow-xl m-10">
-        <div class="">
-            <h2 class="py-4 font-semibold text-2xl text-center text-gray-100 drop-shadow-xl">Register</h2>
-            <hr>
-        </div>
-        @foreach ($errors->all() as $error )
-            <div class="text-red-600 drop-shadow-md bg-red-200 px-4 space-y-2">{{ $error }}</div>
-        @endforeach
-        <form action="{{ route('auth.store') }}" method="post" class="mt-8">
+        <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div class="px-4 py-2 w-full flex justify-between gap-4">
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Email" type="text" name="email" id="email" value="">
-                    <label class="capitalize text-gray-100 text-sm" for="email">Email</label>
-                </div>
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Phone" type="tel" maxlength="11"
-                        name="phone" id="phone" value="">
-                    <label class="capitalize text-gray-100 text-sm " for="phone">Phone </label>
-                </div>
-            </div>
-            <div class="px-4 py-2 w-full flex justify-between gap-4">
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="First Name" type="text" name="first_name" id="first_name" value="">
-                    <label class="capitalize text-gray-100 text-sm" for="first_name">First Name</label>
-                </div>
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Last Name" type="text" name="last_name" id="last_name" value="">
-                    <label class="capitalize text-gray-100 text-sm " for="last_name">Last Name </label>
-                </div>
-            </div>
-            <div class="px-4 py-2 w-full flex justify-between gap-4">
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Password" type="password" name="password" id="password" value="">
-                    <label class="capitalize text-gray-100 text-sm" for="password">Password</label>
-                </div>
-                <div class="w-1/2">
-                    <input
-                        class="py-1 px-0 w-full bg-gray-700 text-gray-100 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none ring-0 peer"
-                        placeholder="Confirm Password" type="password" name="password_confirmation" id="password_confirmation" value="">
-                    <label class="capitalize text-gray-100 text-sm" for="password_confirmation">Confirm Password</label>
-                </div>
+            <!-- Name -->
+            <div>
+                <x-input-label for="name" :value="__('Name')" />
+
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
-            <div class="px-4 py-2 w-full">
-                <input class="px-4 py-2 shadow-md bg-gray-800 text-gray-100 hover:bg-gray-900" type="submit"  value="Register"
-                    >
+            <!-- Email Address -->
+            <div class="mt-4">
+                <x-input-label for="email" :value="__('Email')" />
 
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <x-input-label for="password" :value="__('Password')" />
+
+                <x-text-input id="password" class="block mt-1 w-full"
+                                type="password"
+                                name="password"
+                                required autocomplete="new-password" />
+
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mt-4">
+                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                name="password_confirmation" required />
+
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    {{ __('Already registered?') }}
+                </a>
+
+                <x-primary-button class="ml-4">
+                    {{ __('Register') }}
+                </x-primary-button>
             </div>
         </form>
-        <div class="px-4 py-2">
-            <a class="text-gray-100 font-semibold" href="{{ route('auth.index') }}">Already has an account - For Login ...</a>
-        </div>
-    </div>
-
-</div>
+    </x-auth-card>
+</x-guest-layout>

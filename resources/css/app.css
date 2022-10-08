@@ -1,12 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@media (max-width: 768px) {
-    #sidebar{
-        @apply -left-72;
-    }
-    #sidebar.active{
-        @apply left-0;
-    }
-}

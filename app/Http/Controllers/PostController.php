@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +52,7 @@ class PostController extends Controller
         // upload image
         if ($request->file('image')) {
             $file = $request->image;
-            $image_name = Str::of($request->title)->slug().'-'.$post->id.'.'.$file->extension();
+            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
             $post->image = $file->storePubliclyAs('public/posts', $image_name);
         }
 
@@ -80,7 +81,7 @@ class PostController extends Controller
     public function edit($id_or_slug)
     {
         $post = $this->getPostIdOrSlug($id_or_slug);
-        if (! $post) {
+        if (!$post) {
             session()->flash('error', 'Post not found');
 
             return redirect()->route('post.index');
@@ -99,7 +100,7 @@ class PostController extends Controller
     public function update(Request $request, $id_or_slug)
     {
         $post = $this->getPostIdOrSlug($id_or_slug);
-        if (! $post) {
+        if (!$post) {
             session()->flash('error', 'Post not found');
 
             return redirect()->route('post.index');
@@ -117,7 +118,7 @@ class PostController extends Controller
                 Storage::delete($post->image);
             }
             $file = $request->image;
-            $image_name = Str::of($request->title)->slug().'-'.$post->id.'.'.$file->extension();
+            $image_name = Str::of($request->title)->slug() . '-' . $post->id . '.' . $file->extension();
             $post->image = $file->storePubliclyAs('public/posts', $image_name);
         }
 
@@ -139,7 +140,7 @@ class PostController extends Controller
         // check post is exist
         $posts = $this->getPostIdOrSlug($id_or_slug);
 
-        if (! $posts) {
+        if (!$posts) {
             session()->flash('error', 'Sorry, Post not found');
 
             return redirect()->route('post.index');

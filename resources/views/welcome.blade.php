@@ -24,7 +24,7 @@
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 </h3>
 
-                <a href="{{ route('product.index') }}" class="bg-black text-white px-4 py-3 no-underline">Browse our
+                <a href="" class="bg-black text-white px-4 py-3 no-underline">Browse our
                     products</a>
 
             </div>
